@@ -1,0 +1,115 @@
+@use "../../variables";
+
+.parent-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.page-container {
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.decks-info-options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.5em;
+
+  .deck-label {
+    font-size: 2rem;
+    margin-right: 1rem;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+
+  .add-deck-button {
+    display: flex;
+    height: 2rem;
+    background-color: variables.$purple;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    p {
+      align-self: center;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+
+  .list-view-icon {
+    margin-left: auto;
+  }
+}
+
+.decks-underline {
+  margin-bottom: 1em;
+  width: 100%;
+  height: 1.5px;
+  background-color: variables.$gray;
+}
+
+.decks-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+  width: 100%;
+  height: 75%;
+}
+
+.deck-item-container {
+  position: relative;
+  background-color: variables.$gray;
+  border-radius: 10px;
+  width: 100%;
+  min-width: 350px;
+  max-width: 400px;
+  min-height: 14em;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .topic {
+    position: absolute;
+    font-size: 1.5em;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    top: 35%;
+    left: 50%;
+  }
+
+  .card-quantity {
+    position: absolute;
+    color: variables.$purple;
+    bottom: 5%;
+    left: 5%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .deck-item-container {
+    width: 100%;
+    height: auto;
+    .topic {
+      font-size: 1.5em;
+    }
+  }
+
+  .decks-container {
+    grid-template-columns: 1fr;
+  }
+}

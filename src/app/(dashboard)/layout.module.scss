@@ -1,0 +1,51 @@
+$divider: #777777;
+@use "../variables";
+
+.nav-container {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 1.5em;
+  padding-right: 1rem;
+  margin-bottom: 6em;
+
+  .nav {
+    display: flex;
+    flex-direction: row;
+    width: 15rem;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .nav-upload-csv {
+      display: flex;
+      align-items: center;
+      color: white;
+
+      img {
+        margin-left: 6px;
+      }
+
+      p:hover {
+        cursor: pointer;
+        color: variables.$purple;
+      }
+    }
+
+    .nav-divider {
+      height: 1.25em;
+      width: 1px;
+      background-color: $divider;
+    }
+
+    .nav-signout-link {
+      text-decoration: none;
+      color: inherit;
+      &:hover {
+        color: variables.$purple;
+      }
+    }
+  }
+}

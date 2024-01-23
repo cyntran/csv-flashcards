@@ -1,0 +1,300 @@
+@use "../../variables";
+
+@mixin btn-style() {
+  background-color: variables.$purple;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: max-content;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  max-width: 150px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  > img {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  p {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@mixin flashcard-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .flashcard-text {
+    margin-top: auto;
+    text-align: center;
+    font-size: 1.5em;
+    width: 80%;
+  }
+
+  .flashcard-count {
+    margin-top: auto;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
+    align-self: flex-start;
+    color: variables.$purple;
+  }
+}
+
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.page-container {
+  min-height: 14em;
+  width: 40%;
+  min-width: 20em;
+  height: 100%;
+  min-height: 18em;
+  display: flex;
+  flex-direction: column;
+}
+
+.back-to-deck-btn-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+  width: max-content;
+
+  &:hover {
+    cursor: pointer;
+    .purple-underline {
+      animation: slide-in 0.25s ease-in-out forwards, hasHovered 1ms;
+    }
+  }
+
+  .back-to-deck-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.5em;
+
+    p {
+      color: white;
+      font-size: small;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    img {
+      margin-right: 0.5em;
+    }
+  }
+
+  .purple-underline {
+    width: 6em;
+    height: 2px;
+    animation: slide-out 0.25s ease-out forwards, hasHovered 1ms paused;
+    margin-top: auto;
+  }
+}
+
+/* hide #content element until #container has been hovered over */
+@keyframes hasHovered {
+  0% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    width: 0%;
+    background-color: transparent;
+  }
+  100% {
+    width: 110%;
+    background-color: variables.$purple;
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    width: 110%;
+    background-color: variables.$purple;
+  }
+  100% {
+    width: 0%;
+    background-color: transparent;
+  }
+}
+
+.topic-and-options-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+
+  .topic {
+    font-size: 32px;
+    margin: 0;
+  }
+
+  .add-card-btn {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1rem;
+    @include btn-style;
+  }
+
+  .score {
+    p {
+      text-align: center;
+      font-size: 1.25em;
+      color: variables.$green;
+      margin: auto;
+    }
+  }
+
+  .shuffle-deck-btn {
+    @include btn-style;
+  }
+}
+
+.flashcard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: variables.$gray;
+  height: 50%;
+  width: 100%;
+  max-height: 18em;
+  min-width: 20em;
+  border-radius: 5px;
+  margin-bottom: 2em;
+  // how far away element is from user to give 3d effect
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  .finished-reviewing {
+    animation: colorChange 1s ease-in forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    background-color: variables.$purple;
+    z-index: 1;
+
+    > p {
+      font-size: 1.5em;
+      color: white;
+    }
+
+    .start-over-btn {
+      @include btn-style;
+      background-color: variables.$gray;
+    }
+
+    @keyframes colorChange {
+      0% {
+        background-color: variables.$gray;
+      }
+      100% {
+        background-color: variables.$purple;
+      }
+    }
+  }
+
+  .flashcard-prompt {
+    @include flashcard-style;
+  }
+
+  .flashcard-prompt,
+  .flashcard-answer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+  }
+
+  .flashcard-answer {
+    // hide the back initially from view
+    transform: rotateY(180deg);
+    @include flashcard-style;
+  }
+
+  .flashcard-answer.hide {
+    color: transparent;
+  }
+}
+
+.flashcard-container.flip {
+  // show the back
+  transform: rotateY(180deg);
+}
+
+.flashcard-bottom-btns {
+  display: flex;
+
+  .flashcard-pass-btn {
+    @include btn-style;
+    background-color: variables.$gray;
+    padding-left: 1em;
+  }
+
+  .flashcard-fail-btn {
+    @include btn-style;
+    background-color: variables.$gray;
+    padding-left: 1em;
+  }
+
+  .reveal-answer-btn {
+    margin-left: auto;
+    margin-right: auto;
+    @include btn-style;
+  }
+}
+
+@media (max-width: 1024px) {
+  .flashcard-prompt,
+  .flashcard-answer {
+    font-size: 0.75em;
+  }
+
+  .topic-and-options-container {
+    justify-content: flex-end;
+
+    .topic {
+      margin-right: auto;
+    }
+
+    .add-card-btn,
+    .shuffle-deck-btn,
+    .score {
+      margin-left: 0.5em;
+    }
+  }
+}
