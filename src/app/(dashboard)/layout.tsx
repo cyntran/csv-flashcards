@@ -22,10 +22,8 @@ function Nav() {
 }
 
 export default function LayoutWithNav({
-  nav,
   children,
 }: {
-  nav: boolean;
   children: ReactElement;
 }) {
   return (
