@@ -1,11 +1,8 @@
-import { AWS_API_URL } from "@/config";
-
 export const isBrowser = typeof window != "undefined" && window.localStorage;
 
 export const getStoredUserId = () => {
   if (isBrowser) {
     const userId: string | null = window.localStorage.getItem("userId");
-    console.log("userId", userId);
     if (userId) return userId;
   }
 };
@@ -50,8 +47,9 @@ export const getData = async (_id: string) => {
     : undefined;
 
   if (!dataFromStore) {
+    const API_URL = process.env.NEXT_PUBLIC_AWS_API_URL as string;
     console.log("fetching from database...");
-    const res = await fetch(`${AWS_API_URL}/decks?AccountId=${accountId}`);
+    const res = await fetch(`https://${API_URL}/decks?AccountId=${accountId}`);
     data = await res.json();
     data = data["Items"];
     console.log("data returned from db", JSON.stringify(data));
